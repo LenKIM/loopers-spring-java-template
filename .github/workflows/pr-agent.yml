@@ -2,10 +2,21 @@ name: PR Agent
 on:
   pull_request:
     types: [opened, synchronize]
+  issue_comment:
+    types: [created]  # 💬 댓글 명령(/review 등)을 감지하려면 추가 필요
+
 jobs:
   pr_agent_job:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write   # PR 코멘트 작성 및 상태 업데이트
+      issues: write          # 이슈 코멘트 처리
+      contents: read         # 리포지토리 내용 접근
+
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: PR Agent action step
         uses: Codium-ai/pr-agent@main
         env:
