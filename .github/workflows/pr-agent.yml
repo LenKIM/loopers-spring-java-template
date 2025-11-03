@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: PR Agent action step
-        uses: Codium-ai/pr-agent@main
+        uses: qodo-ai/pr-agent@main
         env:
           OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
           GITHUB_TOKEN: ${{ secrets.G_TOKEN }}
