@@ -1,0 +1,93 @@
+[config]
+model = "gpt-5-2025-08-07"
+fallback_models = ["o4-mini"]
+response_language = "ko-KR"
+publish_output = true
+ai_timeout = 120
+temperature = 0.2
+log_level = "INFO"
+large_patch_policy = "clip"
+
+[github_action_config]
+auto_review = true
+auto_describe = true
+auto_improve = true
+auto_reply = true
+comment_reply_trigger = true
+pr_actions = ["opened", "reopened", "ready_for_review", "synchronize"]
+
+[pr_reviewer]
+require_tests_review = true
+require_security_review = true
+publish_output_no_suggestions = true
+persistent_comment = true
+num_max_findings = 8
+enable_review_labels_security = true
+enable_review_labels_effort = true
+extra_instructions = """
+- 주요 로직 변경 중심으로 리뷰하고, 불필요한 반복 로직이나 테스트 미비 부분이 있으면 지적해 주세요.
+- 보안적 관점(입력 검증, 예외 처리 등)에서도 검토해 주세요.
+1. 반말을 사용하세요
+2.코드리뷰, suggestion, pr생성 모두 한글로 대답하세요
+3.코드 변경 전후의 문맥을 이해하는 데 주변 줄을 참고하되, 실제 변경된 부분에 초점을 맞춰 설명과 제안을 생성해 주세요.
+4.너는 이모지를 많이 사용하고 cheer up한 성격의 내 동료 백엔드 개발자입니다. 이모지를 많이쓰며 주접떨면서 코드리뷰를 해주세요
+5.먼저 칭찬을 하고 이후에 아쉬운 점을 제안해주세요
+6.동료의 입장에서 이해하기 좋은지, 어떻게 수정하면 좋을지 피드백해 주세요.
+"""
+
+[pr_description]
+use_bullet_points = true
+enable_pr_diagram = true
+add_original_user_description = true
+publish_description_as_comment = true
+final_update_message = true
+extra_instructions = """\
+1. 반말을 사용하세요
+2.코드리뷰, suggestion, pr생성 모두 한글로 대답하세요
+3.코드 변경 전후의 문맥을 이해하는 데 주변 줄을 참고하되, 실제 변경된 부분에 초점을 맞춰 설명과 제안을 생성해 주세요.
+4.너는 이모지를 많이 사용하고 cheer up한 성격의 내 동료 백엔드 개발자입니다. 이모지를 많이쓰며 주접떨면서 코드리뷰를 해주세요
+5.먼저 칭찬을 하고 이후에 아쉬운 점을 제안해주세요
+6.동료의 입장에서 이해하기 좋은지, 어떻게 수정하면 좋을지 피드백해 주세요.
+"""
+
+
+[pr_code_suggestions]
+commitable_code_suggestions = true
+focus_only_on_problems = true
+apply_suggestions_checkbox = true
+num_code_suggestions_per_chunk = 3
+publish_output_no_suggestions = true
+extra_instructions = """\
+1. 반말을 사용하세요
+2.코드리뷰, suggestion, pr생성 모두 한글로 대답하세요
+3.코드 변경 전후의 문맥을 이해하는 데 주변 줄을 참고하되, 실제 변경된 부분에 초점을 맞춰 설명과 제안을 생성해 주세요.
+4.너는 이모지를 많이 사용하고 cheer up한 성격의 내 동료 백엔드 개발자입니다. 이모지를 많이쓰며 주접떨면서 코드리뷰를 해주세요
+5.먼저 칭찬을 하고 이후에 아쉬운 점을 제안해주세요
+6.동료의 입장에서 이해하기 좋은지, 어떻게 수정하면 좋을지 피드백해 주세요.
+"""
+
+[pr_questions]
+use_conversation_history = true
+enable_help_text = false
+
+[github_app]
+bot_user = "github-actions[bot]"
+override_deployment_type = true
+# settings for "pull_request" event
+handle_pr_actions = ['opened', 'reopened', 'ready_for_review']
+pr_commands = [
+    "/describe --pr_description.final_update_message=false",
+    "/review",
+    "/improve",
+]
+# settings for "pull_request" event with "synchronize" action - used to detect and handle push triggers for new commits
+handle_push_trigger = false
+push_trigger_ignore_bot_commits = true
+push_trigger_ignore_merge_commits = true
+push_trigger_wait_for_initial_review = true
+push_trigger_pending_tasks_backlog = true
+push_trigger_pending_tasks_ttl = 300
+push_commands = [
+    "/describe",
+    "/review",
+]
